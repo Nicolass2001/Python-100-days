@@ -10,7 +10,7 @@ t.colormode(255)
 colors = colorgram.extract('spots.jpg', 20)
 print(colors[0].rgb)
 
-t.screensize(1000,1000)
+t.screensize(500,500)
 
 t.setworldcoordinates(-10, -10, 100, 100)
 
