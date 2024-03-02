@@ -63,6 +63,26 @@ def save():
                 #Saving updated data
                 json.dump(data, file, indent=4)
 
+# ---------------------------- FIND PASSWORD ------------------------------- #
+
+def find_password():
+    try:
+        file = open(file="data.json")
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No data file found")
+    else:
+        data = json.load(file)
+        website = website_input.get()
+        data_to_show = data.get(website)
+        if data_to_show:
+            email = data_to_show.get("email")
+            password = data_to_show.get("password")
+            messagebox.showinfo(message=f"Email: {email} \nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message="No details for the website exists")
+        file.close()
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -77,14 +97,17 @@ canvas.grid(column=1, row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0, row=1)
 
-website_input = Entry(width=40)
-website_input.grid(column=1, row=1, columnspan=2)
+website_input = Entry(width=21)
+website_input.grid(column=1, row=1)
 website_input.focus()
+
+search_button = Button(width=18, text="Search", command=find_password)
+search_button.grid(column=2, row=1)
 
 email_label = Label(text="Email/Username:")
 email_label.grid(column=0, row=2)
 
-email_input = Entry(width=40)
+email_input = Entry(width=46)
 email_input.grid(column=1, row=2, columnspan=2)
 email_input.insert(0, "example@mail.com")
 
@@ -94,10 +117,10 @@ pass_label.grid(column=0, row=3)
 pass_input = Entry(width=21)
 pass_input.grid(column=1, row=3)
 
-pass_generator_button = Button(text="Generate Password", command=generate_password)
+pass_generator_button = Button(width=18, text="Generate Password", command=generate_password)
 pass_generator_button.grid(column=2, row=3)
 
-add_button = Button(width=36, text="Add", command=save)
+add_button = Button(width=43, text="Add", command=save)
 add_button.grid(column=1, row=4, columnspan=2)
 
 
