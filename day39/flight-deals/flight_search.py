@@ -21,7 +21,7 @@ class FlightSearch:
         return response.json()["locations"][0]["code"]
     
     def search_flight(iataCode):
-        parameters = FlightData(iataCode).get_json()
+        parameters = FlightData().get_json(iataCode)
 
         headers = {
             "apikey": API_KEY

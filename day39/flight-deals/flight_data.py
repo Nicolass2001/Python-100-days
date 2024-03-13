@@ -4,16 +4,13 @@ FROM = "MVD"
 
 class FlightData:
 
-    def __init__(self, fly_to = None):
-        self.fly_to = fly_to
-
-    def get_json(self):
+    def get_json(fly_to):
         today = datetime.now()
         date_from = (today + timedelta(days=1)).strftime("%d/%m/%Y")
         date_to = (today + timedelta(days=30*6)).strftime("%d/%m/%Y")
         return {
             "fly_from": FROM,
-            "fly_to": self.fly_to,
+            "fly_to": fly_to,
             "date_from": date_from,
             "date_to": date_to,
             "nights_in_dst_from": 7,
@@ -24,7 +21,7 @@ class FlightData:
             "limit": 1,
         }
     
-    def get_message(self, data):
+    def get_message(data):
         price = data["price"]
 
         departure_city_name = data["cityFrom"]
