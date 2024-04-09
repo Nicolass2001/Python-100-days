@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 
 
@@ -17,9 +17,18 @@ def about():
     return render_template("about.html")
 
 
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    if request.method == "GET":
+        return render_template("contact.html", data_recived=False)
+    else:
+        with open("db.txt", mode="w") as db:
+            name = request.form["name"]
+            email = request.form["email"]
+            phone = request.form["phone"]
+            message = request.form["message"]
+            db.write(f"{name}, {email}, {phone}, {message}")
+        return render_template("contact.html", data_recived=True)
 
 
 @app.route("/post/<id>")
